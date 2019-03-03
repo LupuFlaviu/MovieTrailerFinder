@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/empty_dest">
+    <fragment
+        android:id="@+id/empty_dest"
+        android:name="com.flaviu.example.movietrailerfinder.utils.ui.EmptyFragment"
+        tools:layout="@layout/fragment_empty">
+        <action
+            android:id="@+id/action_empty_dest_to_movie_list_dest"
+            app:destination="@id/movie_list_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_empty_dest_to_gallery_dest"
+            app:destination="@id/gallery_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movie_list_dest"
+        android:name="com.flaviu.example.movietrailerfinder.ui.main.MovieListFragment"
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_movie_list_dest_to_movie_detail_dest"
+            app:destination="@+id/movie_detail_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="movie"
+            app:argType="com.flaviu.example.movietrailerfinder.data.model.Movie" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/gallery_dest"
+        android:name="com.flaviu.example.movietrailerfinder.ui.main.GalleryFragment"
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_gallery_dest_to_movie_detail_dest"
+            app:destination="@+id/movie_detail_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_up"
+            app:popEnterAnim="@anim/slide_down"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="movie"
+            app:argType="com.flaviu.example.movietrailerfinder.data.model.Movie" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movie_detail_dest"
+        android:name="com.flaviu.example.movietrailerfinder.ui.main.MovieDetailFragment"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="movie"
+            app:argType="com.flaviu.example.movietrailerfinder.data.model.Movie" />
+        <action
+            android:id="@+id/action_movie_detail_dest_to_youtube_dest"
+            app:destination="@+id/youtube_dest" />
+    </fragment>
+
+    <activity
+        android:id="@+id/youtube_dest"
+        android:name="com.flaviu.example.movietrailerfinder.ui.main.FullscreenYoutubeActivity">
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </activity>
+</navigation>

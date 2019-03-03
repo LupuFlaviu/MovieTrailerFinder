@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Movie Trailer Finder</string>
+    <string name="select_view_type">Please select how do you want the movie list to be displayed</string>
+    <string name="button_list">List View</string>
+    <string name="button_image">Image View</string>
+    <string name="label_id">ID:</string>
+    <string name="label_title">Title:</string>
+    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+    <string name="error_connection">Please check your internet connection and try again.</string>
+    <string name="button_retry">Try again</string>
+</resources>
