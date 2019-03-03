@@ -19,6 +19,8 @@ class AutofitGridLayoutManager(
 ) {
     private var mColumnWidth: Int = 0
     private var mColumnWidthChanged = true
+    private var currentWidth = 0
+    private var currentHeight = 0
 
     init {
         setColumnWidth(checkedColumnWidth(context, columnWidth))
@@ -43,8 +45,11 @@ class AutofitGridLayoutManager(
     }
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler?, state: RecyclerView.State) {
-        val width = width
-        val height = height
+        if (currentWidth == width || currentHeight == height) {
+            mColumnWidthChanged = true
+        }
+        currentWidth = width
+        currentHeight = height
         if (mColumnWidthChanged && mColumnWidth > 0 && width > 0 && height > 0) {
             val totalSpace: Int = if (orientation == LinearLayoutManager.VERTICAL) {
                 width - paddingRight - paddingLeft
