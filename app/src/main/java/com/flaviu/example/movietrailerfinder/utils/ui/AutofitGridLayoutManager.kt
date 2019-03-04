@@ -17,8 +17,8 @@ class AutofitGridLayoutManager(
     orientation,
     reverseLayout
 ) {
-    private var mColumnWidth: Int = 0
-    private var mColumnWidthChanged = true
+    private var columnWidth: Int = 0
+    private var isColumnWidthChanged = true
     private var currentWidth = 0
     private var currentHeight = 0
 
@@ -38,27 +38,27 @@ class AutofitGridLayoutManager(
     }
 
     private fun setColumnWidth(newColumnWidth: Int) {
-        if (newColumnWidth > 0 && newColumnWidth != mColumnWidth) {
-            mColumnWidth = newColumnWidth
-            mColumnWidthChanged = true
+        if (newColumnWidth > 0 && newColumnWidth != columnWidth) {
+            columnWidth = newColumnWidth
+            isColumnWidthChanged = true
         }
     }
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler?, state: RecyclerView.State) {
         if (currentWidth == width || currentHeight == height) {
-            mColumnWidthChanged = true
+            isColumnWidthChanged = true
         }
         currentWidth = width
         currentHeight = height
-        if (mColumnWidthChanged && mColumnWidth > 0 && width > 0 && height > 0) {
+        if (isColumnWidthChanged && columnWidth > 0 && width > 0 && height > 0) {
             val totalSpace: Int = if (orientation == LinearLayoutManager.VERTICAL) {
                 width - paddingRight - paddingLeft
             } else {
                 height - paddingTop - paddingBottom
             }
-            val spanCount = Math.max(1, totalSpace / mColumnWidth)
+            val spanCount = Math.max(1, totalSpace / columnWidth)
             setSpanCount(spanCount)
-            mColumnWidthChanged = false
+            isColumnWidthChanged = false
         }
         super.onLayoutChildren(recycler, state)
     }
