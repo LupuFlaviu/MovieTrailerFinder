@@ -3,6 +3,7 @@ package com.flaviu.example.movietrailerfinder
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.ActionBar
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -12,6 +13,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
+import com.flaviu.example.movietrailerfinder.databinding.ActivityMainBinding
 import com.flaviu.example.movietrailerfinder.ui.main.model.MainViewModel
 import com.flaviu.example.movietrailerfinder.utils.rx.Optional
 import dagger.android.support.DaggerAppCompatActivity
@@ -45,10 +47,13 @@ class MainActivity : DaggerAppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(
+            this, R.layout.activity_main)
         supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
         supportActionBar?.setCustomView(R.layout.action_bar_title)
         navController = findNavController(R.id.fragment_container)
@@ -89,7 +94,7 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun showSelectionDialog() {
-        progressBar.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
         MaterialDialog(this).show {
             message(R.string.select_view_type)
             positiveButton(R.string.button_list, click = {
@@ -104,7 +109,7 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun showErrorDialog(error: Throwable?) {
-        progressBar.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
         MaterialDialog(this).show {
             message(
                 text = if (error is UnknownHostException || error is SocketTimeoutException) {
@@ -126,7 +131,7 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun navigate(actionId: Int) {
-        progressBar.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
         navController.apply {
             navigate(actionId)
             addOnDestinationChangedListener(destinationChangedListener)

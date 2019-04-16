@@ -9,20 +9,20 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
-import com.flaviu.example.movietrailerfinder.R
+import com.flaviu.example.movietrailerfinder.databinding.FragmentListBinding
 import com.flaviu.example.movietrailerfinder.ui.main.adapter.MoviesAdapter
 import com.flaviu.example.movietrailerfinder.ui.main.model.MainViewModel
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_list.*
 
 class MovieListFragment : DaggerFragment() {
 
     private lateinit var moviesAdapter: MoviesAdapter
+    private lateinit var binding: FragmentListBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_list, container, false)
+        binding = FragmentListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,14 +37,16 @@ class MovieListFragment : DaggerFragment() {
                 moviesAdapter.movies = it
                 moviesAdapter.notifyDataSetChanged()
             }
-            movie_list.adapter = moviesAdapter
+            binding.movieList.adapter = moviesAdapter
         })
-        movie_list.layoutManager = LinearLayoutManager(
-            context,
-            RecyclerView.VERTICAL,
-            false
-        )
         val decoration = DividerItemDecoration(context, VERTICAL)
-        movie_list.addItemDecoration(decoration)
+        binding.movieList.apply {
+            layoutManager = LinearLayoutManager(
+                context,
+                VERTICAL,
+                false
+            )
+            addItemDecoration(decoration)
+        }
     }
 }

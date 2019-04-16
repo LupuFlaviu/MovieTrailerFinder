@@ -8,4 +8,6 @@
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
     <string name="error_connection">Please check your internet connection and try again.</string>
     <string name="button_retry">Try again</string>
+    <string name="label_original_title">Original title:</string>
+    <string name="label_votes">Number of votes:</string>
 </resources>

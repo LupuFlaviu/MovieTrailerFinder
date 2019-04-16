@@ -6,20 +6,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.model.GlideUrl
 import com.flaviu.example.movietrailerfinder.BuildConfig
-import com.flaviu.example.movietrailerfinder.R
 import com.flaviu.example.movietrailerfinder.data.model.Movie
+import com.flaviu.example.movietrailerfinder.databinding.GalleryItemBinding
 import com.flaviu.example.movietrailerfinder.di.module.GlideApp
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.gallery_item.*
 
 class GalleryAdapter(
     var movies: List<Movie>,
     private val onMovieClicked: (Movie) -> Unit
 ) : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
+    private lateinit var binding: GalleryItemBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.gallery_item, parent, false)
-        return ViewHolder(view)
+        binding = GalleryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding.root)
     }
 
     override fun getItemCount() = movies.size
@@ -30,9 +31,10 @@ class GalleryAdapter(
 
     inner class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bindData(movie: Movie, onMovieClicked: (Movie) -> Unit) {
-            GlideApp.with(image_cover).load(GlideUrl(BuildConfig.IMAGE_URL + movie.poster_path)).into(image_cover)
-            text_title.text = movie.title
-            itemContainer.setOnClickListener {
+            GlideApp.with(binding.imageCover).load(GlideUrl(BuildConfig.IMAGE_URL + movie.poster_path))
+                .into(binding.imageCover)
+            binding.textTitle.text = movie.title
+            binding.itemContainer.setOnClickListener {
                 onMovieClicked(movie)
             }
         }

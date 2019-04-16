@@ -9,18 +9,19 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.flaviu.example.movietrailerfinder.R
+import com.flaviu.example.movietrailerfinder.databinding.FragmentGalleryBinding
 import com.flaviu.example.movietrailerfinder.ui.main.adapter.GalleryAdapter
 import com.flaviu.example.movietrailerfinder.ui.main.model.MainViewModel
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_gallery.*
 
 class GalleryFragment : DaggerFragment() {
 
     private lateinit var galleryAdapter: GalleryAdapter
+    private lateinit var binding: FragmentGalleryBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_gallery, container, false)
+        binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,9 +36,9 @@ class GalleryFragment : DaggerFragment() {
                 galleryAdapter.movies = it
                 galleryAdapter.notifyDataSetChanged()
             }
-            gallery_list.adapter = galleryAdapter
+            binding.galleryList.adapter = galleryAdapter
         })
-        gallery_list.layoutManager = LinearLayoutManager(
+        binding.galleryList.layoutManager = LinearLayoutManager(
             context,
             RecyclerView.HORIZONTAL,
             false

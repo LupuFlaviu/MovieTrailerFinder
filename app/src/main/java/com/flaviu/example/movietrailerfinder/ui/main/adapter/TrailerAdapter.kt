@@ -5,10 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.flaviu.example.movietrailerfinder.BuildConfig
-import com.flaviu.example.movietrailerfinder.R
+import com.flaviu.example.movietrailerfinder.databinding.TrailerItemBinding
 import com.flaviu.example.movietrailerfinder.di.module.GlideApp
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.trailer_item.*
 
 class TrailerAdapter(private val onTrailerClicked: (String) -> Unit) :
     RecyclerView.Adapter<TrailerAdapter.ViewHolder>() {
@@ -40,9 +39,11 @@ class TrailerAdapter(private val onTrailerClicked: (String) -> Unit) :
         "https://www.youtube.com/watch?v=M7XM597XO94"
     )
 
+    private lateinit var binding: TrailerItemBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.trailer_item, parent, false)
-        return ViewHolder(view)
+        binding = TrailerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding.root)
     }
 
     override fun getItemCount() = trailerList.size
@@ -53,15 +54,15 @@ class TrailerAdapter(private val onTrailerClicked: (String) -> Unit) :
 
     inner class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bindData(url: String, onTrailerClicked: (String) -> Unit) {
-            GlideApp.with(image_thumbnail)
+            GlideApp.with(binding.imageThumbnail)
                 .load(
                     BuildConfig.YOUTUBE_URL + url.substring(
                         url.indexOf("=") + 1,
                         url.length
                     ) + THUMBNAIL_EXTENSION
                 )
-                .into(image_thumbnail)
-            image_thumbnail.setOnClickListener {
+                .into(binding.imageThumbnail)
+            binding.imageThumbnail.setOnClickListener {
                 onTrailerClicked(url)
             }
         }
